@@ -1,1 +1,1 @@
-Docker daemon in hyper.sh
+Run Docker daemon in hyper container on hyper.sh
