@@ -1,6 +1,6 @@
-FROM centos:7
+FROM ubuntu:16.04
 
-RUN yum clean all && yum install e2fsprogs iptables docker -y &&  yum clean all
+RUN apt-get update  &&  apt-get install docker.io cgroup-lite -y  &&  apt-get clean
 
 ADD entrypoint.sh /entrypoint.sh
 
@@ -10,9 +10,5 @@ EXPOSE 2375
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD /usr/bin/dockerd-current \
-          --add-runtime docker-runc=/usr/libexec/docker/docker-runc-current \
-          --host=unix:///var/run/docker.sock \
-          --host=tcp://0.0.0.0:2375 \
-          --default-runtime=docker-runc \
-          --userland-proxy-path=/usr/libexec/docker/docker-proxy-current
+CMD /usr/bin/dockerd --host=tcp://0.0.0.0:2375 --host=unix:///var/run/docker.sock
+
